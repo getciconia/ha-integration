@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""Headlessly complete HA onboarding for the dev container — no clicking
+"""Headlessly complete HA onboarding for the dev container - no clicking
 through the UI. Does NOT add Ciconia; do that in the UI and link your own
 Ciconia account with a code.
 
 (See integration_test.py for a fully automated, real-device end-to-end
-check that DOES add a device — that one's for CI/on-demand verification,
+check that DOES add a device - that one's for CI/on-demand verification,
 this one's for manual poking-around in the browser.)
 
 Idempotent: safe to re-run. Onboarding only happens once per HA config
-dir — the admin account's refresh_token is cached in .dev-state.json
+dir - the admin account's refresh_token is cached in .dev-state.json
 (gitignored, sibling to this script's parent dir) so re-runs just print
 the same login details again instead of re-onboarding.
 
@@ -19,7 +19,7 @@ Env vars:
     HA_URL                                Base URL of the dev HA instance
                                            (default http://localhost:8123)
     DEV_HA_USERNAME / DEV_HA_PASSWORD     Admin user created on first run
-                                           (defaults: admin / admin — this
+                                           (defaults: admin / admin - this
                                            instance is localhost-only, so
                                            ease of typing wins over strength)
 """

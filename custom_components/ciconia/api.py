@@ -21,11 +21,11 @@ class CiconiaApiError(Exception):
 
 
 class CiconiaAuthError(CiconiaApiError):
-    """401 — invalid API token OR unknown public_id.
+    """401 - invalid API token OR unknown public_id.
 
     Ciconia deliberately returns the same response for both cases
     (anti-enumeration measure on their end), so this can't distinguish
-    which one is wrong — surface a single generic message covering both.
+    which one is wrong - surface a single generic message covering both.
     """
 
 
@@ -44,7 +44,7 @@ class CiconiaLinkError(CiconiaApiError):
 
 @dataclass(frozen=True, kw_only=True)
 class DeviceSummary:
-    """One entry of GET /api/v1/devices — metadata only, no position."""
+    """One entry of GET /api/v1/devices - metadata only, no position."""
 
     device_id: str
     name: str
@@ -71,7 +71,7 @@ class DeviceSummary:
 class DeviceData:
     """Normalized Ciconia device payload.
 
-    Every field except device_id/name can be null — most obviously all
+    Every field except device_id/name can be null - most obviously all
     together on a device with no fix yet, but individual fields can also
     be null independently depending on what the specific device/protocol
     reports. Always handle None.
@@ -121,7 +121,7 @@ class DeviceData:
 
 @dataclass(frozen=True, kw_only=True)
 class LinkRequest:
-    """What POST /api/v1/link_requests returns — show user_code + URL."""
+    """What POST /api/v1/link_requests returns - show user_code + URL."""
 
     user_code: str
     device_code: str
@@ -186,7 +186,7 @@ class CiconiaApiClient:
         self._api_token = api_token
 
     async def async_list_devices(self) -> list[DeviceSummary]:
-        """Every device on the account. Cheap — no live upstream call."""
+        """Every device on the account. Cheap - no live upstream call."""
         status, payload = await _request(
             self._session, "GET", f"{self._base_url}/api/v1/devices", api_token=self._api_token
         )

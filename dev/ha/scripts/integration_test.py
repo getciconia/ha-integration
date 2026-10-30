@@ -6,15 +6,15 @@ Maintainer tool: it signs in to the Ciconia website the way a browser does
 updating when its pages change. Not run in this repository's CI.
 
 Spins up a throwaway HA instance in Docker (separate container/network/
-config dir from the dev instance in ha-dev.sh — safe to run alongside
+config dir from the dev instance in ha-dev.sh - safe to run alongside
 it), onboards it headlessly, adds the Ciconia integration via the
 actual config flow (over HA's REST API, exactly as a user would through
-the UI) — including approving the link code on the Ciconia website
-by signing in as the test account — waits for the coordinator's first
+the UI) - including approving the link code on the Ciconia website
+by signing in as the test account - waits for the coordinator's first
 successful poll, and asserts on the resulting entities. Always tears the
 container down afterward, pass or fail.
 
-This hits the real Ciconia API with real credentials — it's for
+This hits the real Ciconia API with real credentials - it's for
 on-demand/CI verification that the integration still actually works
 against the live backend, not for routine local development (see
 bootstrap.py + ha-dev.sh for that).
@@ -57,9 +57,9 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 
 def _load_default_base_url() -> str:
     # Load const.py directly rather than `import custom_components.ciconia.const`
-    # — the latter runs custom_components/ciconia/__init__.py first (it's the
+    # - the latter runs custom_components/ciconia/__init__.py first (it's the
     # parent package), which imports homeassistant. const.py itself has zero
-    # dependencies, and this script has none either — keep it that way so CI
+    # dependencies, and this script has none either - keep it that way so CI
     # doesn't need a pip install step, just python3 + docker.
     const_path = REPO_ROOT / "custom_components" / "ciconia" / "const.py"
     spec = importlib.util.spec_from_file_location("ciconia_const", const_path)
@@ -107,7 +107,7 @@ def _csrf_token(html: str, action: str, contains: str = "") -> str:
             match = re.search(r'name="authenticity_token" value="([^"]+)"', form)
             if match:
                 return match.group(1)
-    raise SystemExit(f"No form for {action} on the page — did the sign-in or link page change?")
+    raise SystemExit(f"No form for {action} on the page. Did the sign-in or link page change?")
 
 
 def approve_link_code(base_url: str, link_url: str, email: str, password: str) -> None:
@@ -211,7 +211,7 @@ def run_assertions(token: str, base_url: str) -> None:
     for s in all_states:
         by_domain.setdefault(s["entity_id"].split(".")[0], []).append(s)
 
-    # A fresh HA has no other device trackers, so these are all ours — one
+    # A fresh HA has no other device trackers, so these are all ours - one
     # per active device on the account.
     trackers = by_domain.get("device_tracker", [])
     check(len(trackers) >= 1, "at least one device_tracker entity exists")
@@ -219,7 +219,7 @@ def run_assertions(token: str, base_url: str) -> None:
         return  # can't derive the device slugs below without them
 
     # Our device_tracker is unnamed (_attr_name = None), so its entity_id is
-    # exactly the device's slug — e.g. "device_tracker.atm_700_domek" ->
+    # exactly the device's slug - e.g. "device_tracker.atm_700_domek" ->
     # "atm_700_domek". Our sensor/binary_sensor entities are always
     # "<domain>.<that slug>_<key>". Use it to filter out unrelated entities
     # a fresh HA instance creates on its own (sensor.sun_*, sensor.backup_*,
@@ -298,7 +298,7 @@ def main() -> None:
         compose("down", "-v")
         # HA (running as root inside the container) creates some files/dirs
         # in the bind-mounted config dir as root, which the CI runner's
-        # unprivileged user can't remove directly on Linux — clean those up
+        # unprivileged user can't remove directly on Linux - clean those up
         # via a container running with the same privilege that created them,
         # then a plain (best-effort) rmtree for whatever's left.
         subprocess.run(

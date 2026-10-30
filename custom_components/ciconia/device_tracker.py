@@ -1,4 +1,4 @@
-"""Device tracker platform for Ciconia — one GPS entity per tracker."""
+"""Device tracker platform for Ciconia - one GPS entity per tracker."""
 
 from __future__ import annotations
 
@@ -81,7 +81,7 @@ class CiconiaDeviceTracker(CiconiaEntity, TrackerEntity):
 
     @property
     def extra_state_attributes(self) -> dict[str, Any]:
-        """When the fix was taken — HA's own timestamps are the poll time."""
+        """When the fix was taken - HA's own timestamps are the poll time."""
         device = self.device
         return {
             "altitude": device.altitude,

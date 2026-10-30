@@ -55,7 +55,7 @@ async def test_async_get_device_502_raises_upstream_error(aioclient_mock, hass):
 
 
 async def test_async_get_device_null_fields(aioclient_mock, hass):
-    """No fix yet — every field except device_id/name is null."""
+    """No fix yet - every field except device_id/name is null."""
     aioclient_mock.get(
         "http://example.local/api/v1/devices/dv_new",
         json={

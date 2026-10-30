@@ -1,4 +1,4 @@
-"""Binary sensor platform for Ciconia — flags a tracker as stale."""
+"""Binary sensor platform for Ciconia - flags a tracker as stale."""
 
 from __future__ import annotations
 
@@ -34,7 +34,7 @@ async def async_setup_entry(
 class CiconiaStaleBinarySensor(CiconiaEntity, BinarySensorEntity):
     """On when the tracker hasn't produced a fresh fix recently (or ever).
 
-    The threshold is configurable in the options (stale_after_seconds) — a
+    The threshold is configurable in the options (stale_after_seconds) - a
     car reporting every few seconds and a battery-saving tracker that sleeps
     for hours need very different definitions of "hasn't reported in a while".
     """

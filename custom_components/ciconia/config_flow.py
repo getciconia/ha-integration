@@ -91,7 +91,7 @@ async def _async_list_devices(
 
 def _device_choices(devices: list[DeviceSummary]) -> dict[str, str]:
     return {
-        d.device_id: d.name if d.ready else f"{d.name} (activating — added once it's active)"
+        d.device_id: d.name if d.ready else f"{d.name} (activating, added once it's active)"
         for d in devices
     }
 
@@ -346,7 +346,7 @@ class CiconiaOptionsFlow(config_entries.OptionsFlow):
     """Which trackers to include, polling interval and stale threshold.
 
     The server address isn't here: the token belongs to that server, so
-    changing it means linking again — that's the reconfigure flow.
+    changing it means linking again - that's the reconfigure flow.
     """
 
     async def async_step_init(

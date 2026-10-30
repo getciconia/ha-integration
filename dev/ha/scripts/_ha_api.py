@@ -1,7 +1,7 @@
 """Shared REST-API helpers for driving a real HA instance headlessly.
 
 Used by both bootstrap.py (manual dev instance) and integration_test.py
-(ephemeral CI/on-demand instance) — same onboarding dance, different
+(ephemeral CI/on-demand instance) - same onboarding dance, different
 lifecycle around it.
 """
 
@@ -49,7 +49,7 @@ def wait_for_ha(ha_url: str, timeout: int = 90) -> None:
         try:
             # Not /api/onboarding: that endpoint is unloaded entirely once
             # onboarding is fully complete (permanent 404 afterward, not
-            # "not ready yet") — manifest.json is a static frontend asset
+            # "not ready yet") - manifest.json is a static frontend asset
             # that's always served, onboarded or not.
             http(ha_url, "GET", "/manifest.json")
             print("HA is up.")
@@ -89,7 +89,7 @@ def onboard(ha_url: str, state_file: Path, username: str, password: str) -> dict
     if user_step_done:
         raise SystemExit(
             "HA is already onboarded but no saved credentials were found "
-            f"({state_file} is missing) — onboarded some other way. Wipe "
+            f"({state_file} is missing) - onboarded some other way. Wipe "
             "its config dir and retry."
         )
 

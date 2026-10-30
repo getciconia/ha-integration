@@ -1,4 +1,4 @@
-"""Sensor platform for Ciconia — one entity per tracker per measurement."""
+"""Sensor platform for Ciconia - one entity per tracker per measurement."""
 
 from __future__ import annotations
 

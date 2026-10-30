@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "Link your Ciconia account",
-        "description": "Submit to get a short code. You approve it on the Ciconia website — no password or token to copy.",
+        "description": "Submit to get a short code. You approve it on the Ciconia website. No password or token to copy.",
         "sections": {
           "advanced": {
             "name": "Advanced",
@@ -33,7 +33,7 @@
       },
       "reauth_confirm": {
         "title": "Link Ciconia again",
-        "description": "Home Assistant can no longer reach your trackers — it was disconnected on the Ciconia website. Submit to get a code and approve it there to reconnect."
+        "description": "Home Assistant can no longer reach your trackers: it was disconnected on the Ciconia website. Submit to get a code and approve it there to reconnect."
       },
       "reconfigure": {
         "title": "Change server",
@@ -65,7 +65,7 @@
     "abort": {
       "already_configured": "This Ciconia account is already set up. Its token was refreshed.",
       "cannot_connect": "Could not reach the Ciconia server.",
-      "reauth_successful": "Linked again — your trackers are back.",
+      "reauth_successful": "Linked again. Your trackers are back.",
       "reconfigure_successful": "Moved to the new server address.",
       "wrong_account": "That code was approved by a different Ciconia account than the one set up here."
     }
@@ -129,7 +129,7 @@
   },
   "exceptions": {
     "auth_failed": {
-      "message": "Ciconia no longer accepts this connection — link it again."
+      "message": "Ciconia no longer accepts this connection. Link it again."
     },
     "cannot_connect": {
       "message": "Could not reach Ciconia: {error}"

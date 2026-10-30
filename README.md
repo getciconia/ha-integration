@@ -4,17 +4,17 @@
 
 See where your [Ciconia](https://getciconia.com) GPS trackers are, right in
 Home Assistant: each tracker becomes a device with a location on the map,
-battery, speed, signal and more — ready for zones, automations and
+battery, speed, signal and more, ready for zones, automations and
 dashboards.
 
 ## Use cases
 
-- **Arrive/leave automations** — the tracker entity works with Home
+- **Arrive/leave automations**: the tracker entity works with Home
   Assistant zones: open the gate when the car gets home, notify when the
   bike leaves the garage at night.
-- **Low battery or silent tracker** — alert when *Battery* drops below 20 %
+- **Low battery or silent tracker**: alert when *Battery* drops below 20 %
   or *Stale* turns on (no fresh fix for an hour).
-- **Map and history** — put trackers on a map card; the history and logbook
+- **Map and history**: put trackers on a map card; the history and logbook
   keep the route.
 
 ## Requirements
@@ -38,7 +38,7 @@ folder of your Home Assistant configuration and restart.
 Settings → Devices & services → **Add integration** → **Ciconia** →
 **Submit**. Home Assistant shows a short code and a link: open the link,
 sign in to Ciconia, check the code and click **Allow**. Home Assistant
-continues on its own and lists your trackers — untick any you don't want.
+continues on its own and lists your trackers; untick any you don't want.
 No ids, passwords or tokens to copy.
 
 ### Setup parameters
@@ -63,7 +63,7 @@ Devices & services → Ciconia → **Configure**:
 ## Supported devices
 
 Every tracker sold or registered with Ciconia, whatever its model. Which
-sensors have values depends on what the tracker reports — a sensor stays
+sensors have values depends on what the tracker reports: a sensor stays
 *unknown* when the tracker doesn't report that measurement.
 
 ## Entities
@@ -90,7 +90,7 @@ Each tracker is one device with:
 
 Ciconia is a cloud service, so Home Assistant polls it (`cloud_polling`).
 Every polling interval it fetches the account's tracker list and then each
-tracker's latest position — Ciconia passes each request on live, nothing is
+tracker's latest position. Ciconia passes each request on live, nothing is
 cached in between. A tracker that can't be reached in one round shows as
 *unavailable* until the next successful poll; if none can be reached the
 integration logs it once and keeps retrying.
@@ -139,23 +139,23 @@ automation:
   doesn't make a sleeping tracker report.
 - Battery shows only for trackers that report a percentage (some report a
   supply voltage, which isn't shown).
-- No address, heading or course — latitude, longitude, altitude and speed
+- No address, heading or course: latitude, longitude, altitude and speed
   only.
 
 ## Troubleshooting
 
-- **"Could not reach the Ciconia server" during setup** — check that Home
+- **"Could not reach the Ciconia server" during setup**: check that Home
   Assistant has internet access.
-- **The code expired** — submit again for a new one; codes are valid for
+- **The code expired**: submit again for a new one; codes are valid for
   10 minutes.
-- **Home Assistant asks to re-authenticate** — the connection was removed
+- **Home Assistant asks to re-authenticate**: the connection was removed
   on the Ciconia website (Integrations → Disconnect). Re-authenticate and
   approve the new code with the same account.
-- **A tracker is missing** — trackers still activating are added once
+- **A tracker is missing**: trackers still activating are added once
   they're active; also check it's ticked under **Configure**.
-- **Entities are unavailable** — Ciconia couldn't reach the tracker this
+- **Entities are unavailable**: Ciconia couldn't reach the tracker this
   round; it recovers on its own. If it persists, download the diagnostics
-  (Devices & services → Ciconia → ⋮ → Download diagnostics — tokens and
+  (Devices & services → Ciconia → ⋮ → Download diagnostics; tokens and
   positions are removed) and open an issue.
 - Debug logs: Devices & services → Ciconia → ⋮ → *Enable debug logging*.
 
@@ -226,4 +226,4 @@ in CI here.
   [Integration Quality Scale](https://developers.home-assistant.io/docs/core/integration-quality-scale/).
   Update it with the code.
 - Bump `version` in `manifest.json`, add the changes to `CHANGELOG.md`, then
-  tag `vX.Y.Z` and publish a GitHub release — HACS installs releases.
+  tag `vX.Y.Z` and publish a GitHub release (HACS installs releases).

@@ -1,6 +1,6 @@
 """DataUpdateCoordinator for Ciconia.
 
-No caching on Ciconia's own side at all — every device poll triggers a
+No caching on Ciconia's own side at all - every device poll triggers a
 live upstream call on their end. This coordinator's polling interval is the
 only throttle in the whole chain, so don't poll faster than needed. A 502
 is treated as transient: raise UpdateFailed and let HA's own coordinator
@@ -41,7 +41,7 @@ class CiconiaData:
     """Latest poll: the devices this entry tracks and their positions.
 
     A tracked device missing from `positions` failed this cycle (or has no
-    position yet) — its entities show as unavailable.
+    position yet) - its entities show as unavailable.
     """
 
     devices: dict[str, DeviceSummary] = field(default_factory=dict)
@@ -77,7 +77,7 @@ class CiconiaCoordinator(DataUpdateCoordinator[CiconiaData]):
         try:
             return await self._async_update()
         except CiconiaAuthError as err:
-            # Triggers HA's reauth flow automatically — see config_flow.py.
+            # Triggers HA's reauth flow automatically - see config_flow.py.
             # Most likely cause: this Home Assistant was disconnected on the
             # Ciconia website (Integrations page), which revokes its token.
             raise ConfigEntryAuthFailed(
@@ -107,7 +107,7 @@ class CiconiaCoordinator(DataUpdateCoordinator[CiconiaData]):
                 positions[device_id] = result
             elif isinstance(result, CiconiaAuthError):
                 # The token just listed this device, so a 401 means it was
-                # removed in between — not a bad token. Next cycle drops it.
+                # removed in between - not a bad token. Next cycle drops it.
                 _LOGGER.debug("Device %s disappeared during the update", device_id)
             elif isinstance(result, CiconiaUpstreamError):
                 failures.append(result)

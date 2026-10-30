@@ -2,7 +2,7 @@
 # Lifecycle helper for the local dev Home Assistant instance (Docker).
 # The integration's source is bind-mounted read-only into the container
 # from ../../custom_components/ciconia, so `up`/`restart` is all you
-# need after editing code — no manual copy/upload step.
+# need after editing code - no manual copy/upload step.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -32,7 +32,7 @@ case "${1:-}" in
     fi
     ;;
   test)
-    # Real end-to-end check against a real account — spins up its own
+    # Real end-to-end check against a real account - spins up its own
     # throwaway HA instance (separate from the one above), safe to run
     # while `up` is already running. Requires CICONIA_EMAIL/CICONIA_PASSWORD,
     # loaded from .env (gitignored) if present, else from the environment.
