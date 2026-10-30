@@ -72,19 +72,19 @@ Each tracker is one device with:
 
 | Entity | Type | Notes |
 | --- | --- | --- |
-| *Tracker name* | `device_tracker` | GPS location. Accuracy is estimated from HDOP (HDOP × 5 m). Attributes: altitude, speed, fixed time, fix age. |
-| Battery | sensor, % | Only when the tracker reports a percentage. |
-| Speed | sensor, km/h | |
-| Altitude | sensor, m | |
-| Last fix | sensor, timestamp | When the position was measured (not when Home Assistant polled). |
-| Stale | binary sensor | On when the last fix is older than *Consider stale after*. |
-| Fix age | diagnostic, s | Seconds since the last fix. |
-| GSM signal | diagnostic, 0–5 | |
-| GPS signal | diagnostic, 0–5 | From HDOP: 5 ideal (<1), 4 excellent, 3 good, 2 moderate, 1 fair, 0 poor or no fix. |
-| Visible satellites | diagnostic | |
-| Chip temperature | diagnostic, °C | |
-| HDOP | diagnostic, disabled by default | Raw horizontal dilution of precision. |
-| GSM operator code | diagnostic, disabled by default | Mobile network code (MCC+MNC). |
+| *Tracker name* | `device_tracker` | GPS location. The state is the Home Assistant zone it's in, or *Away*. Attributes: latitude, longitude, GPS accuracy (HDOP × 5 m, 0 when unknown), battery level, altitude, speed, fixed time, fix age. |
+| Battery | sensor, 0–100 % | Only for trackers that report a percentage. |
+| Speed | sensor, km/h, 0 or more | Speed at the last fix. |
+| Altitude | sensor, m | Height above sea level, from GPS. Less precise than latitude and longitude. |
+| Last fix | sensor, timestamp | When the position was measured, not when Home Assistant polled. |
+| Stale | binary sensor (problem) | On when the last fix is older than *Consider stale after* (default 1 hour), or when there's no fix yet. |
+| Fix age | diagnostic, s, 0 or more | Seconds since the last fix. |
+| GSM signal | diagnostic, 0–5 | Mobile signal bars: 0 none, 5 best. |
+| GPS signal | diagnostic, 0–5 | Position quality, from HDOP: 5 ideal (under 1), 4 excellent (1–2), 3 good (2–5), 2 moderate (5–10), 1 fair (10–20), 0 poor (over 20) or no fix. |
+| Visible satellites | diagnostic, 0 or more | GPS satellites the tracker can see. It needs at least 4 for a position, and more usually means a more precise one. 0 means no view of the sky, e.g. in a garage. |
+| Chip temperature | diagnostic, °C | Internal temperature of the tracker's electronics, not the air around it. Usually warmer than its surroundings. |
+| HDOP | diagnostic, 0 or more, disabled by default | Raw horizontal dilution of precision: how well spread the satellites are. Lower is better; under 2 is good. |
+| GSM operator code | diagnostic, disabled by default | Mobile network: country code (MCC) followed by operator code (MNC), e.g. `26003` = Orange Poland. |
 
 ## How data is updated
 
