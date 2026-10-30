@@ -11,7 +11,7 @@ from .api import CiconiaApiClient
 from .const import CONF_BASE_URL, CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL, DOMAIN
 from .coordinator import CiconiaConfigEntry, CiconiaCoordinator
 
-PLATFORMS: list[Platform] = [Platform.BINARY_SENSOR, Platform.DEVICE_TRACKER, Platform.SENSOR]
+PLATFORMS: list[Platform] = [Platform.DEVICE_TRACKER, Platform.SENSOR]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: CiconiaConfigEntry) -> bool:

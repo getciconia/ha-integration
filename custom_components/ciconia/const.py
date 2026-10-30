@@ -21,12 +21,5 @@ CONF_SCAN_INTERVAL = "scan_interval"
 DEFAULT_SCAN_INTERVAL = 5
 MIN_SCAN_INTERVAL = 5
 
-# How long since the last fix before the device is considered "stale"
-# (binary_sensor.py). Configurable via the options flow - a car
-# polled every 30s and a battery-saving pet tracker that sleeps for hours
-# need very different definitions of "hasn't reported in a while".
-CONF_STALE_AFTER_SECONDS = "stale_after_seconds"
-DEFAULT_STALE_AFTER_SECONDS = 3600
-MIN_STALE_AFTER_SECONDS = 60
 
 REQUEST_TIMEOUT_SECONDS = 10

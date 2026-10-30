@@ -76,13 +76,11 @@
         "title": "Ciconia options",
         "data": {
           "devices": "Trackers",
-          "scan_interval": "Polling interval (seconds)",
-          "stale_after_seconds": "Consider stale after (seconds)"
+          "scan_interval": "Polling interval (seconds)"
         },
         "data_description": {
           "devices": "Unticked trackers are removed from Home Assistant. New trackers on your account are added automatically.",
-          "scan_interval": "How often Home Assistant asks for fresh positions. Minimum 5.",
-          "stale_after_seconds": "The Stale sensor turns on when a tracker's last fix is older than this."
+          "scan_interval": "How often Home Assistant asks for fresh positions. Minimum 5."
         }
       }
     },
@@ -119,11 +117,6 @@
       },
       "fixed_time": {
         "name": "Last fix"
-      }
-    },
-    "binary_sensor": {
-      "stale": {
-        "name": "Stale"
       }
     }
   },

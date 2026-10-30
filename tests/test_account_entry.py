@@ -126,7 +126,6 @@ async def test_one_failing_device_does_not_take_down_the_rest(hass, aioclient_mo
     assert hass.states.get("device_tracker.car").state != STATE_UNAVAILABLE
     assert hass.states.get("device_tracker.van").state == STATE_UNAVAILABLE
     assert hass.states.get("sensor.van_altitude").state == STATE_UNAVAILABLE
-    assert hass.states.get("binary_sensor.van_stale").state == STATE_UNAVAILABLE
 
 
 async def test_all_devices_failing_retries_setup(hass, aioclient_mock, account_entry):
@@ -176,14 +175,13 @@ async def test_options_flow_picks_devices(hass, aioclient_mock, account_entry):
     assert result["type"] == FlowResultType.FORM
     result = await hass.config_entries.options.async_configure(
         result["flow_id"],
-        {"devices": ["dv_car"], "scan_interval": 60, "stale_after_seconds": 3600},
+        {"devices": ["dv_car"], "scan_interval": 60},
     )
     await hass.async_block_till_done()
 
     assert account_entry.options == {
         "excluded_devices": ["dv_van"],
         "scan_interval": 60,
-        "stale_after_seconds": 3600,
     }
     # The update listener reloads the entry, dropping the van.
     assert _tracker_ids(hass, account_entry) == {"dv_car"}

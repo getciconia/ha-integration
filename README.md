@@ -10,10 +10,10 @@ dashboards.
 ## Use cases
 
 - **Arrive/leave automations**: the tracker entity works with Home
-  Assistant zones: open the gate when the car gets home, notify when the
+  Assistant zones, so you can open the gate when the car gets home, notify when the
   bike leaves the garage at night.
 - **Low battery or silent tracker**: alert when *Battery* drops below 20 %
-  or *Stale* turns on (no fresh fix for an hour).
+  or *Fix age* passes an hour.
 - **Map and history**: put trackers on a map card; the history and logbook
   keep the route.
 
@@ -58,7 +58,6 @@ Devices & services → Ciconia → **Configure**:
 | --- | --- | --- |
 | Trackers | all | Unticked trackers are removed from Home Assistant; new trackers on the account are added automatically. |
 | Polling interval | 5 s (minimum 5) | How often Home Assistant asks Ciconia for fresh positions. |
-| Consider stale after | 3600 s (minimum 60) | When the *Stale* sensor turns on. A tracker that sleeps for hours to save battery needs a longer value. |
 
 ## Supported devices
 
@@ -77,8 +76,7 @@ Each tracker is one device with:
 | Speed | sensor, km/h, 0 or more | Speed at the last fix. |
 | Altitude | sensor, m | Height above sea level, from GPS. Less precise than latitude and longitude. |
 | Last fix | sensor, timestamp | When the position was measured, not when Home Assistant polled. |
-| Stale | binary sensor (problem) | On when the last fix is older than *Consider stale after* (default 1 hour), or when there's no fix yet. |
-| Fix age | diagnostic, s, 0 or more | Seconds since the last fix. |
+| Fix age | diagnostic, s, 0 or more | Seconds since the last fix. Keeps growing while the tracker sends nothing new, so use it to spot a tracker that went quiet (see *Examples*). |
 | GSM signal | diagnostic, 0–5 | Mobile signal bars: 0 none, 5 best. |
 | GPS signal | diagnostic, 0–5 | Position quality, from HDOP: 5 ideal (under 1), 4 excellent (1–2), 3 good (2–5), 2 moderate (5–10), 1 fair (10–20), 0 poor (over 20) or no fix. |
 | Visible satellites | diagnostic, 0 or more | GPS satellites the tracker can see. It needs at least 4 for a position, and more usually means a more precise one. 0 means no view of the sky, e.g. in a garage. |
@@ -130,6 +128,22 @@ automation:
       - action: notify.mobile_app_phone
         data:
           message: The car is home.
+```
+
+Tell when the tracker goes quiet (no new position for an hour; pick a
+longer time for a tracker that sleeps to save battery):
+
+```yaml
+automation:
+  - alias: Car tracker silent
+    triggers:
+      - trigger: numeric_state
+        entity_id: sensor.car_fix_age
+        above: 3600
+    actions:
+      - action: notify.mobile_app_phone
+        data:
+          message: The car tracker hasn't reported for an hour.
 ```
 
 ## Known limitations

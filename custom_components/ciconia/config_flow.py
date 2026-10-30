@@ -47,13 +47,10 @@ from .const import (
     CONF_BASE_URL,
     CONF_EXCLUDED_DEVICES,
     CONF_SCAN_INTERVAL,
-    CONF_STALE_AFTER_SECONDS,
     DEFAULT_BASE_URL,
     DEFAULT_SCAN_INTERVAL,
-    DEFAULT_STALE_AFTER_SECONDS,
     DOMAIN,
     MIN_SCAN_INTERVAL,
-    MIN_STALE_AFTER_SECONDS,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -338,12 +335,12 @@ class CiconiaConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     def async_get_options_flow(
         config_entry: config_entries.ConfigEntry,
     ) -> CiconiaOptionsFlow:
-        """Options: trackers, polling interval, stale threshold."""
+        """Options: trackers and polling interval."""
         return CiconiaOptionsFlow()
 
 
 class CiconiaOptionsFlow(config_entries.OptionsFlow):
-    """Which trackers to include, polling interval and stale threshold.
+    """Which trackers to include and the polling interval.
 
     The server address isn't here: the token belongs to that server, so
     changing it means linking again - that's the reconfigure flow.
@@ -352,7 +349,7 @@ class CiconiaOptionsFlow(config_entries.OptionsFlow):
     async def async_step_init(
         self, user_input: dict[str, Any] | None = None
     ) -> config_entries.ConfigFlowResult:
-        """One form: trackers, polling interval, stale threshold."""
+        """One form: trackers and polling interval."""
         entry = self.config_entry
         try:
             devices = await _async_list_devices(
@@ -371,7 +368,6 @@ class CiconiaOptionsFlow(config_entries.OptionsFlow):
                 data={
                     CONF_EXCLUDED_DEVICES: [d for d in choices if d not in selected],
                     CONF_SCAN_INTERVAL: user_input[CONF_SCAN_INTERVAL],
-                    CONF_STALE_AFTER_SECONDS: user_input[CONF_STALE_AFTER_SECONDS],
                 },
             )
 
@@ -387,12 +383,6 @@ class CiconiaOptionsFlow(config_entries.OptionsFlow):
                         CONF_SCAN_INTERVAL,
                         default=entry.options.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL),
                     ): vol.All(vol.Coerce(int), vol.Range(min=MIN_SCAN_INTERVAL)),
-                    vol.Required(
-                        CONF_STALE_AFTER_SECONDS,
-                        default=entry.options.get(
-                            CONF_STALE_AFTER_SECONDS, DEFAULT_STALE_AFTER_SECONDS
-                        ),
-                    ): vol.All(vol.Coerce(int), vol.Range(min=MIN_STALE_AFTER_SECONDS)),
                 }
             ),
         )

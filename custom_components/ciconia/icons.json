@@ -5,14 +5,6 @@
         "default": "mdi:map-marker"
       }
     },
-    "binary_sensor": {
-      "stale": {
-        "default": "mdi:clock-alert-outline",
-        "state": {
-          "off": "mdi:clock-check-outline"
-        }
-      }
-    },
     "sensor": {
       "altitude": {
         "default": "mdi:image-filter-hdr"
