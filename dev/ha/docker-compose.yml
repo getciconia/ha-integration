@@ -1,0 +1,16 @@
+services:
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: ${HA_CONTAINER_NAME:-ciconia-ha-dev}
+    volumes:
+      - ${HA_CONFIG_DIR:-./config}:/config
+      # Live code mount: edit custom_components/ciconia on the host,
+      # restart the container (`ha-dev restart`) to pick the change up.
+      # A custom integration's Python is only re-imported on a full HA
+      # restart, so there's no faster inner loop than that.
+      - ../../custom_components/ciconia:/config/custom_components/ciconia:ro
+    environment:
+      - TZ=Etc/UTC
+    ports:
+      - "${HA_PORT:-8123}:8123"
+    restart: unless-stopped

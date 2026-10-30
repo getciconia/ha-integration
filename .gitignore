@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# Editors
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Local dev HA instance state (Docker)
+dev/ha/config/
+dev/ha/.dev-state.json
+dev/ha/.env
+ha-itest.log
+.mypy_cache/
+.coverage

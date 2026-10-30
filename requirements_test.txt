@@ -1,0 +1,7 @@
+# Pinned so CI doesn't break when a new Home Assistant comes out; bump
+# together (pytest-homeassistant-custom-component pins homeassistant).
+homeassistant==2026.10.4
+pytest-homeassistant-custom-component==0.13.375
+pytest-cov==7.1.0
+mypy==2.4.1
+ruff==0.17.3

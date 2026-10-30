@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Help with your Ciconia account or tracker
+    url: https://getciconia.com
+    about: Account, tracker and app questions go to Ciconia support, not this repository.
+  - name: Security problem
+    url: https://github.com/getciconia/ha-integration/blob/master/SECURITY.md
+    about: Please report security problems privately.

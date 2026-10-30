@@ -1,0 +1,138 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Link your Ciconia account",
+        "description": "Submit to get a short code. You approve it on the Ciconia website — no password or token to copy.",
+        "sections": {
+          "advanced": {
+            "name": "Advanced",
+            "description": "For development only.",
+            "data": {
+              "base_url": "Server address"
+            },
+            "data_description": {
+              "base_url": "Leave as is. Include https:// at the start."
+            }
+          }
+        }
+      },
+      "link_failed": {
+        "title": "Not linked",
+        "description": "Submit to get a new code and try again."
+      },
+      "devices": {
+        "title": "Choose trackers",
+        "description": "Untick any tracker you don't want in Home Assistant. Trackers you add to your account later appear here on their own; change the selection any time under Configure.",
+        "data": {
+          "devices": "Trackers"
+        },
+        "data_description": {
+          "devices": "Each ticked tracker becomes a device with a location and sensors."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Link Ciconia again",
+        "description": "Home Assistant can no longer reach your trackers — it was disconnected on the Ciconia website. Submit to get a code and approve it there to reconnect."
+      },
+      "reconfigure": {
+        "title": "Change server",
+        "description": "Moving to another server address means linking again: submit to get a code and approve it with the same Ciconia account.",
+        "sections": {
+          "advanced": {
+            "name": "Advanced",
+            "description": "For development only.",
+            "data": {
+              "base_url": "Server address"
+            },
+            "data_description": {
+              "base_url": "Leave as is. Include https:// at the start."
+            }
+          }
+        }
+      }
+    },
+    "progress": {
+      "wait_for_approval": "1. Open **[{url}]({url})** (sign in if asked).\n2. Check that it shows the code **{code}** and click **Allow**.\n\nThis page continues on its own once you approve. The code is valid for {minutes} minutes."
+    },
+    "error": {
+      "link_denied": "The request was denied on the Ciconia website.",
+      "link_expired": "The code expired before it was approved.",
+      "cannot_connect": "Could not reach the Ciconia server. Check the address and your internet connection.",
+      "invalid_url": "Enter a full address starting with https://",
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "already_configured": "This Ciconia account is already set up. Its token was refreshed.",
+      "cannot_connect": "Could not reach the Ciconia server.",
+      "reauth_successful": "Linked again — your trackers are back.",
+      "reconfigure_successful": "Moved to the new server address.",
+      "wrong_account": "That code was approved by a different Ciconia account than the one set up here."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Ciconia options",
+        "data": {
+          "devices": "Trackers",
+          "scan_interval": "Polling interval (seconds)",
+          "stale_after_seconds": "Consider stale after (seconds)"
+        },
+        "data_description": {
+          "devices": "Unticked trackers are removed from Home Assistant. New trackers on your account are added automatically.",
+          "scan_interval": "How often Home Assistant asks for fresh positions. Minimum 5.",
+          "stale_after_seconds": "The Stale sensor turns on when a tracker's last fix is older than this."
+        }
+      }
+    },
+    "abort": {
+      "invalid_auth": "Ciconia no longer accepts this connection. Re-authenticate to link again.",
+      "cannot_connect": "Could not reach the Ciconia server."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "altitude": {
+        "name": "Altitude"
+      },
+      "gsm_signal": {
+        "name": "GSM signal"
+      },
+      "gps_signal": {
+        "name": "GPS signal"
+      },
+      "hdop": {
+        "name": "HDOP"
+      },
+      "gsm_operator_code": {
+        "name": "GSM operator code"
+      },
+      "chip_temperature": {
+        "name": "Chip temperature"
+      },
+      "satellites": {
+        "name": "Visible satellites"
+      },
+      "fix_age": {
+        "name": "Fix age"
+      },
+      "fixed_time": {
+        "name": "Last fix"
+      }
+    },
+    "binary_sensor": {
+      "stale": {
+        "name": "Stale"
+      }
+    }
+  },
+  "exceptions": {
+    "auth_failed": {
+      "message": "Ciconia no longer accepts this connection — link it again."
+    },
+    "cannot_connect": {
+      "message": "Could not reach Ciconia: {error}"
+    }
+  }
+}
