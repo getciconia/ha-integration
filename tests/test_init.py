@@ -180,3 +180,19 @@ async def test_diagnostics_redact_secrets_and_positions(hass, aioclient_mock, ac
     assert position["gsm_signal"] == 4
     assert diagnostics["devices"][CAR]["status"] == "ready"
     assert diagnostics["coordinator"]["last_update_success"] is True
+
+
+async def test_renaming_in_ciconia_renames_the_device(hass, aioclient_mock, account_entry):
+    mock_car(aioclient_mock)
+    await _setup(hass, account_entry)
+
+    aioclient_mock.clear_requests()
+    aioclient_mock.get(f"{BASE}/api/v1/devices", json=device_list((CAR, "Mum's Car", "ready")))
+    aioclient_mock.get(f"{BASE}/api/v1/devices/{CAR}", json=device_payload(CAR, "Mum's Car"))
+    await account_entry.runtime_data.async_refresh()
+    await hass.async_block_till_done()
+
+    device = dr.async_get(hass).async_get_device(identifiers={(DOMAIN, CAR)})
+    assert device.name == "Mum's Car"
+    # Entity ids stay put, so automations keep working.
+    assert hass.states.get("device_tracker.dad_s_car") is not None

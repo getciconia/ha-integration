@@ -11,3 +11,4 @@ First public release.
 - Options: which trackers and the polling interval.
 - Diagnostics with the token and positions removed.
 - The tracker's location shows as the device's main entity, not under Diagnostic.
+- A tracker renamed in Ciconia is renamed in Home Assistant on the next poll.
