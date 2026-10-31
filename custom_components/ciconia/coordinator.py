@@ -128,10 +128,11 @@ class CiconiaCoordinator(DataUpdateCoordinator[CiconiaData]):
     def _follow_renames(self, devices: dict[str, DeviceSummary]) -> None:
         """Rename HA devices renamed in Ciconia (a name set in HA still wins)."""
         registry = dr.async_get(self.hass)
-        for device_id, summary in devices.items():
-            device = registry.async_get_device(identifiers={(DOMAIN, device_id)})
-            if device and device.name != summary.name:
-                registry.async_update_device(device.id, name=summary.name)
+        for device in dr.async_entries_for_config_entry(registry, self.config_entry.entry_id):
+            for domain, device_id in device.identifiers:
+                summary = devices.get(device_id) if domain == DOMAIN else None
+                if summary and device.name != summary.name:
+                    registry.async_update_device(device.id, name=summary.name)
 
     def _remove_untracked_devices(self, tracked: set[str]) -> None:
         """Drop HA devices this entry no longer tracks (removed or unticked)."""

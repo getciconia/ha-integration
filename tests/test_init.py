@@ -192,7 +192,8 @@ async def test_renaming_in_ciconia_renames_the_device(hass, aioclient_mock, acco
     await account_entry.runtime_data.async_refresh()
     await hass.async_block_till_done()
 
-    device = dr.async_get(hass).async_get_device(identifiers={(DOMAIN, CAR)})
+    registry = dr.async_get(hass)
+    [device] = dr.async_entries_for_config_entry(registry, account_entry.entry_id)
     assert device.name == "Mum's Car"
     # Entity ids stay put, so automations keep working.
     assert hass.states.get("device_tracker.dad_s_car") is not None
