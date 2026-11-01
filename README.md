@@ -7,6 +7,12 @@ Home Assistant: each tracker becomes a device with a location on the map,
 battery, speed, signal and more, ready for zones, automations and
 dashboards.
 
+Works with both ways of running Ciconia:
+
+- **Ciconia Cloud**, the hosted service at app.getciconia.com.
+- **[Ciconia Private Relay](https://github.com/getciconia/relay)**, the
+  open-source server you run yourself, so positions never leave your home.
+
 ## Use cases
 
 - **Arrive/leave automations**: the tracker entity works with Home
@@ -20,8 +26,9 @@ dashboards.
 ## Requirements
 
 - Home Assistant **2026.3** or newer.
-- A Ciconia account with at least one tracker (trackers added later appear
-  on their own).
+- A Ciconia Cloud account with at least one tracker, or a Ciconia Private
+  Relay that Home Assistant can reach (trackers added later appear on their
+  own).
 
 ## Installation
 
@@ -47,8 +54,17 @@ No ids, passwords or tokens to copy.
 | --- | --- | --- |
 | Trackers | After approving the code | Which trackers to add. Untick to leave one out. |
 
-The first step also has an *Advanced* section with the server address. It's
-for development only; leave it as is.
+### Private Relay
+
+Open the *Advanced* section of the first step and set **Server address** to
+the address shown on your relay panel's *Integrations* page, for example
+`http://192.168.1.20:8080`. Then approve the code in the relay's panel
+instead of on the Ciconia website. Leave the address as is for Ciconia
+Cloud.
+
+Running the Private Relay as a Home Assistant app with MQTT? Your trackers
+are already in Home Assistant through MQTT discovery, so you don't need this
+integration. Use one or the other, or every tracker shows up twice.
 
 ## Configuration options
 
@@ -61,7 +77,8 @@ Devices & services → Ciconia → **Configure**:
 
 ## Supported devices
 
-Every tracker sold or registered with Ciconia, whatever its model. Which
+Every tracker sold or registered with Ciconia Cloud, whatever its model,
+and every tracker added to a Ciconia Private Relay (Teltonika ATM700). Which
 sensors have values depends on what the tracker reports: a sensor stays
 *unknown* when the tracker doesn't report that measurement.
 
@@ -86,10 +103,10 @@ Each tracker is one device with:
 
 ## How data is updated
 
-Ciconia is a cloud service, so Home Assistant polls it (`cloud_polling`).
-Every polling interval it fetches the account's tracker list and then each
-tracker's latest position. Ciconia passes each request on live, nothing is
-cached in between. A tracker that can't be reached in one round shows as
+Home Assistant polls the server: Ciconia Cloud over the internet, or a
+Private Relay on your network. Every polling interval it fetches the tracker
+list and then each tracker's latest position. Ciconia Cloud passes each
+request on live, nothing is cached in between. A tracker that can't be reached in one round shows as
 *unavailable* until the next successful poll; if none can be reached the
 integration logs it once and keeps retrying.
 
@@ -148,7 +165,8 @@ automation:
 
 ## Known limitations
 
-- Needs an internet connection: Ciconia is a cloud service.
+- With Ciconia Cloud, needs an internet connection. A Private Relay only
+  needs your home network.
 - Positions come only as often as the tracker reports; polling faster
   doesn't make a sleeping tracker report.
 - Battery shows only for trackers that report a percentage (some report a
@@ -159,12 +177,15 @@ automation:
 ## Troubleshooting
 
 - **"Could not reach the Ciconia server" during setup**: check that Home
-  Assistant has internet access.
+  Assistant has internet access. For a Private Relay, check the server
+  address under *Advanced* (with `http://` and the port) and that Home
+  Assistant can reach that machine.
 - **The code expired**: submit again for a new one; codes are valid for
   10 minutes.
 - **Home Assistant asks to re-authenticate**: the connection was removed
-  on the Ciconia website (Integrations → Disconnect). Re-authenticate and
-  approve the new code with the same account.
+  on the Ciconia website or in the relay's panel (Integrations →
+  Disconnect). Re-authenticate and approve the new code with the same
+  account, or in the same relay.
 - **A tracker is missing**: trackers still activating are added once
   they're active; also check it's ticked under **Configure**.
 - **Entities are unavailable**: Ciconia couldn't reach the tracker this
@@ -177,7 +198,7 @@ automation:
 
 Devices & services → Ciconia → ⋮ → **Delete**. To revoke Home Assistant's
 access as well, click **Disconnect** next to it on the Integrations page of
-the Ciconia website. Installed through HACS? Remove it there too, then
+the Ciconia website or the relay's panel. Installed through HACS? Remove it there too, then
 restart.
 
 ## Contributing
