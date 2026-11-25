@@ -1,5 +1,7 @@
 """Constants for the Ciconia integration."""
 
+from datetime import timedelta
+
 DOMAIN = "ciconia"
 MANUFACTURER = "Ciconia"
 
@@ -23,3 +25,8 @@ MIN_SCAN_INTERVAL = 5
 
 
 REQUEST_TIMEOUT_SECONDS = 10
+
+# A tracker that can't be fetched keeps its last data this long before its
+# entities go unavailable, so a short outage or a single failed poll doesn't
+# flip every entity to unavailable and back.
+UNAVAILABLE_AFTER = timedelta(minutes=2)

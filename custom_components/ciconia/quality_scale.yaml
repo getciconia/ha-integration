@@ -41,7 +41,11 @@ rules:
   config-entry-unloading: done
   docs-configuration-parameters: done
   docs-installation-parameters: done
-  entity-unavailable: done
+  entity-unavailable:
+    status: done
+    comment: >-
+      A tracker that can't be fetched keeps its last data for 2 minutes (so a
+      single failed poll doesn't flip it), then goes unavailable.
   integration-owner: done
   log-when-unavailable: done
   parallel-updates: done

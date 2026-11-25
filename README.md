@@ -103,12 +103,16 @@ Each tracker is one device with:
 
 ## How data is updated
 
-Home Assistant polls the server: Ciconia Cloud over the internet, or a
+Home Assistant polls the server: the Ciconia App over the internet, or a
 Private Relay on your network. Every polling interval it fetches the tracker
-list and then each tracker's latest position. Ciconia Cloud passes each
-request on live, nothing is cached in between. A tracker that can't be reached in one round shows as
-*unavailable* until the next successful poll; if none can be reached the
-integration logs it once and keeps retrying.
+list and then each tracker's latest position. The Ciconia App passes each
+request on live, nothing is cached in between.
+
+If a tracker can't be fetched, it keeps its last values for up to 2 minutes
+(*Fix age* keeps counting), so a short hiccup doesn't make anything
+*unavailable*. If it still can't be fetched after that, its entities show as
+*unavailable* and the integration logs it once; they come back on the first
+successful poll.
 
 Positions are only as fresh as the tracker's own reports: a tracker that
 reports every few minutes doesn't move more often in Home Assistant even

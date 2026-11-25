@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.1
+
+- A tracker that can't be fetched keeps its last values for up to 2 minutes
+  instead of going *unavailable* on the first failed poll. Short outages no
+  longer make entities flip between unavailable and back every poll. *Fix
+  age* keeps counting meanwhile.
+- A tracker that stays unreachable is logged once, and once when it's back.
+
 ## 0.2.0
 
 First public release.
